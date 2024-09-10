@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="myApplication.service.MyModelControllerTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2024-09-09T15:54:15" hostname="usernoMacBook-Pro.local" time="0.087">
+  <properties/>
+  <testcase name="createを実行すると、新しいOverallPlansを作成して保存する()" classname="myApplication.service.MyModelControllerTest" time="0.087">
+    <failure message="java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0" type="java.lang.IndexOutOfBoundsException">java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:266)
+	at java.base/java.util.Objects.checkIndex(Objects.java:361)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at myApplication.service.MyModelControllerTest.createを実行すると、新しいOverallPlansを作成して保存する(MyModelServiceTest.kt:36)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+</failure>
+  </testcase>
+  <system-out><![CDATA[00:54:13.781 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [myApplication.service.MyModelControllerTest]: MyModelControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:54:13.935 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration myApplication.MyModelBackendApplication for test class myApplication.service.MyModelControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.3)
+
+2024-09-10T00:54:14.093+09:00  INFO 89655 --- [demo] [    Test worker] m.service.MyModelControllerTest          : Starting MyModelControllerTest using Java 17.0.9 with PID 89655 (started by user in /Users/user/crud/myapplication/backend)
+2024-09-10T00:54:14.093+09:00  INFO 89655 --- [demo] [    Test worker] m.service.MyModelControllerTest          : No active profile set, falling back to 1 default profile: "default"
+2024-09-10T00:54:14.331+09:00  INFO 89655 --- [demo] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-10T00:54:14.352+09:00  INFO 89655 --- [demo] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 17 ms. Found 1 JPA repository interface.
+2024-09-10T00:54:15.035+09:00  INFO 89655 --- [demo] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-10T00:54:15.130+09:00  INFO 89655 --- [demo] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:4e7cc756-9044-409c-8d32-4f9f98d6364d user=SA
+2024-09-10T00:54:15.131+09:00  INFO 89655 --- [demo] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-10T00:54:15.158+09:00  INFO 89655 --- [demo] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-10T00:54:15.188+09:00  INFO 89655 --- [demo] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-10T00:54:15.207+09:00  INFO 89655 --- [demo] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-10T00:54:15.272+09:00  INFO 89655 --- [demo] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-10T00:54:15.585+09:00  INFO 89655 --- [demo] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-10T00:54:15.598+09:00  INFO 89655 --- [demo] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-10T00:54:15.669+09:00  WARN 89655 --- [demo] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-10T00:54:15.925+09:00  INFO 89655 --- [demo] [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2024-09-10T00:54:15.925+09:00  INFO 89655 --- [demo] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2024-09-10T00:54:15.926+09:00  INFO 89655 --- [demo] [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2024-09-10T00:54:15.941+09:00  INFO 89655 --- [demo] [    Test worker] m.service.MyModelControllerTest          : Started MyModelControllerTest in 1.945 seconds (process running for 2.558)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
