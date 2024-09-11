@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  postges:
+    container_name: postgres_mymodel_container
+    image: postgres:15.0
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mymodel-dev
+      PGDATA: /data/postgres
+    volumes:
+      - postgres_data:/data/postgres
+    ports:
+      - "5555:5432"
+    networks:
+      - local-mymodel-dev-net
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  local-mymodel-dev-net:
+    driver: bridge

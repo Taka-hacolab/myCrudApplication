@@ -9,7 +9,7 @@ interface MyModelService {
 }
 
 @Service
-class MyModelServiceImpl(val myModelRepository: JPAMyModelRepository):MyModelService {
+class MyModelServiceImpl(val myModelRepository: JPAMyModelRepository): MyModelService {
     override fun create(newMyModel: MyModel){
         myModelRepository.save(newMyModel)
     }

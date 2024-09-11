@@ -1,1 +1,20 @@
-spring.application.name=demo
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: password
+    url: jdbc:postgresql://localhost:5555/mymodel-dev
+    username: user
+  jpa:
+    generate-ddl: false
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
+    enabled: true
+    locations: classpath:db/migration
+    password: password
+    user: user
