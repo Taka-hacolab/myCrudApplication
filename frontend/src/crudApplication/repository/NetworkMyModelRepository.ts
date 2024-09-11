@@ -1,7 +1,7 @@
 import axios from 'axios';
+import {RequestMyModel} from "../model/MyModel.ts";
 
 
-export const postMyModel = () => {
-  axios.post('')
-
+export const postMyModel = (newMyModel: RequestMyModel) => {
+  axios.post('/api/mymodel',newMyModel)
 }
