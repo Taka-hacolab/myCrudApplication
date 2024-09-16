@@ -1,6 +1,5 @@
 package myApplication.controller
 
-import myApplication.model.MyModel
 import myApplication.service.MyModelService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +11,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.justRun
 import io.mockk.verify
+import myApplication.model.RequestMyModel
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -26,8 +26,7 @@ class MyModelControllerTest {
 	fun `postリクエストをすると、statusOKが返り、リクエストボディにセットした値を引数にserviceのcreateを呼ぶ` () {
 		justRun { mockedMyModelService.create(any()) }
 
-		val mockedMyModel = MyModel(
-			id = 1,
+		val mockedMyModel = RequestMyModel(
 			name = "hoge",
 			age = 20
 		)
@@ -36,7 +35,6 @@ class MyModelControllerTest {
 			MockMvcRequestBuilders.post("/api/mymodel")
 				.content("""
 					{
-						"id":1,
 						"name":"hoge",
 						"age":20
 					}

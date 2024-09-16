@@ -11,12 +11,18 @@ import jakarta.persistence.Table
 data class MyModel (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Int = 0,
     val name: String,
     val age: Int
 )
 
 data class RequestMyModel (
+    val name: String,
+    val age: Int
+)
+
+data class ResponseMyModel (
+    val id: Int,
     val name: String,
     val age: Int
 )

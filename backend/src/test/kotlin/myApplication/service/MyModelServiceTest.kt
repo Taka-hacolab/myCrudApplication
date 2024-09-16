@@ -1,6 +1,6 @@
 package myApplication.service
 
-import myApplication.model.MyModel
+import myApplication.model.RequestMyModel
 import myApplication.repository.JPAMyModelRepository
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -23,8 +23,7 @@ class MyModelServiceTest {
 		mockedMyModelRepository.deleteAll()
 		myModelService = MyModelServiceImpl(mockedMyModelRepository)
 
-		val newMyModel = MyModel(
-			id = 1,
+		val newMyModel = RequestMyModel(
 			name = "taro",
 			age = 20
 		)

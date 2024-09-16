@@ -1,6 +1,6 @@
 package myApplication.controller
 
-import myApplication.model.MyModel
+import myApplication.model.RequestMyModel
 import myApplication.service.MyModelService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +14,7 @@ class MyModelController(val myModelService: MyModelService) {
     @PostMapping("/mymodel")
     fun create(
         @RequestBody
-        reqBody: MyModel
+        reqBody: RequestMyModel
     ){
         myModelService.create(reqBody)
     }
