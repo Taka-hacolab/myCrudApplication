@@ -8,6 +8,15 @@ export function InformationInput() {
   const [myModel, setMyModel] = useState<RequestMyModel>({name: '', age: 0})
 
 
+
+  const handleTextChange = (e) => {
+    setText(e.target.value)
+  }
+
+  const handleAgeChange = (e) => {
+    setAge(Number(e.target.value))
+  }
+
   const storeContents = (inputName, inputAge) => {
     setMyModel(() => {
       const createModel: RequestMyModel = { name: inputName, age: inputAge };
@@ -19,15 +28,11 @@ export function InformationInput() {
   return (
     <>
       <p>ToDoList</p>
-      <input type="textbox" value={text} onChange={(e) => {
-        setText(e.target.value)
-      }} placeholder='名前を入力'
+      <input type="textbox" value={ text } onChange={handleTextChange} placeholder='名前を入力'
       />
-      <input type="number" value={ age } onChange={( e) => {
-        setAge(Number(e.target.value))
-      }}/>
+      <input type="number" value={ age } onChange={handleAgeChange}/>
       <div>
-        <button onClick={ () => { storeContents(text, age )}}> 保存</button>
+        <button onClick={ () => { storeContents(text, age )}}>保存</button>
       </div>
     </>
   )

@@ -9,7 +9,7 @@ describe('<InformationInput />', () => {
     await renderInformationInput()
 
     expect(screen.getByText('ToDoList')).toBeInTheDocument()
-    expect(screen.queryByPlaceholderText('名前を入力')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('名前を入力')).toBeInTheDocument()
     expect(screen.getByRole('spinbutton')).toBeInTheDocument()
     expect(screen.getByRole('button', {name: '保存'}))
   })

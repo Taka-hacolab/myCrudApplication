@@ -1,7 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "module": "esnext",
     "strict": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
@@ -12,4 +24,6 @@
     "src", // ソースコードが含まれるディレクトリ
     "node_modules/vitest/globals.d.ts"   // テストファイルが含まれるディレクトリ
   ],
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "types": [ "node", "@testing-library/jest-dom"]
 }

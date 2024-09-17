@@ -10,6 +10,11 @@ export default defineConfig({
     setupFiles: './src/setup.ts',
     css: true,
     mockReset: true,
+    include: ['./src/**/**/*.test.{tsx,ts}'],
+  },
+  build: {
+    outDir: "build",
+    sourcemap: true
   },
   server: {
     proxy: {
