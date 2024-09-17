@@ -32,6 +32,7 @@ export function InformationInput() {
       />
       <input type="number" value={ age } onChange={handleAgeChange}/>
       <div>
+        //useStateを引数として渡す必要なし
         <button onClick={ () => { storeContents(text, age )}}>保存</button>
       </div>
     </>
