@@ -1,4 +1,4 @@
-import './App.css'
+import './App.scss'
 import {InformationInput} from "./crudApplication/component/InformationInput.tsx";
 
 function App() {
