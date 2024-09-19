@@ -37,7 +37,7 @@ class ContentsControllerTest {
         doNothing().`when`(mockedContentsService).create(stubContents)
 
         mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/content").content(
+            MockMvcRequestBuilders.post("/api/contents").content(
                 """
                     {
                         "content":"コンテンツ"
