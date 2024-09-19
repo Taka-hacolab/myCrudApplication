@@ -1,7 +1,9 @@
 package myApplication.controller
 
 import myApplication.model.RequestContents
+import myApplication.model.ResponseContents
 import myApplication.service.ContentsService
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,5 +18,10 @@ class ContentsController(val contentsService: ContentsService) {
         reqBody: RequestContents
     ){
         contentsService.create(reqBody)
+    }
+
+    @GetMapping("/contents")
+    fun getAll(): List<ResponseContents>{
+        return contentsService.getAll()
     }
 }

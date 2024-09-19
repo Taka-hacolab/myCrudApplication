@@ -21,5 +21,5 @@ data class RequestContents (
 
 data class ResponseContents (
     val id: Int,
-    val name: String,
+    val content: String,
 )
