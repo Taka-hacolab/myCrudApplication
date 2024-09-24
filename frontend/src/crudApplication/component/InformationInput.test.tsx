@@ -1,9 +1,9 @@
-import {InformationInput} from "./InformationInput.tsx";
+import {InformationInput} from "./InformationInput";
 import {render, screen} from "@testing-library/react";
-import userEvent from '@testing-library/user-event'
-import {postMyModel} from "../repository/NetworkMyModelRepository.ts";
 import {vi} from "vitest";
-import {postContents} from "../repository/NetworkContentsRepository.ts";
+import {postContents} from "../repository/NetworkContentsRepository";
+import userEvent from '@testing-library/user-event'
+
 
 describe('<InformationInput />', () => {
   it('初期レンダリング時に指定の要素がレンダリングされていること', async () => {
@@ -18,7 +18,9 @@ describe('<InformationInput />', () => {
     await renderInformationInput()
     vi.mock('../repository/NetworkContentsRepository.ts')
 
-    const inputContent = screen.getByRole('textbox')
+    const inputContent = screen.getByRole('textbox') as HTMLInputElement
+    console.log('inputContent---',inputContent)
+    console.log('typeof-inputContent---',typeof inputContent)
 
     await userEvent.type(inputContent, 'hoge')
     await userEvent.click(screen.getByRole('button', {name: '保存'}))

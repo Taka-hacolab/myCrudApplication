@@ -1,7 +1,7 @@
 import {vi} from "vitest";
 import axios, {AxiosResponse} from "axios";
-import {getAllContents, postContents} from "./NetworkContentsRepository.ts";
-import {RequestContents, ResponseContents} from "../model/Contents.ts";
+import {getAllContents, postContents} from "./NetworkContentsRepository";
+import {RequestContents, ResponseContents} from "../model/Contents";
 
 
 vi.mock('axios')

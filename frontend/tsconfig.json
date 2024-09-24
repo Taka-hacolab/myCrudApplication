@@ -1,29 +1,28 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "module": "esnext",
-    "strict": true,
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
+    "target": "es5", //コンパイルしたコードがどのECMAScriptのバージョンに変換されるかを指定
+    "lib": ["dom", "dom.iterable", "es5"],// DOM関連のライブラリーの指定
+    "allowJs": false, //TSファイル内でJSファイルを許可(falseにした方が良いかも)
+    "noFallthroughCasesInSwitch": true, // switch文を使った時のフォールスルーを許可しない
+    "moduleResolution": "node", //モジュールの解決方法を Node.jsスタイルに設定(調査)
+    "resolveJsonModule": true, //jsonModuleのインポートを許可
+    "isolatedModules": true, //各ファイルを独立したモジュールとして扱う
+
+    "incremental": false,
+    "composite": false,
+    "noEmit": true,  //型チェックで使用(結果ファイルの出力の設定)
+
+    "allowSyntheticDefaultImports": true,//defaultがなくてもimportを許可する
+    "module": "esnext", //使用するモジュールシステムを ESNextに設定
+    "strict": true,  //厳密な型チェックの有効
+    "jsx": "react-jsx", //JSXの変換
+    "esModuleInterop": true, //・CommonJS モジュールとの相互運用性を有効
+    "skipLibCheck": true, //ライブラリの型定義をチェックしないように設定
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vitest"]
+  },//コンパイルのオプション
   "include": [
-    "src", // ソースコードが含まれるディレクトリ
-    "node_modules/vitest/globals.d.ts"   // テストファイルが含まれるディレクトリ
+    "src", //ソースコードが含まれるディレクトリ
+    "node_modules/vitest/globals.d.ts" //テストファイルが含まれるディレクトリ
   ],
-  "references": [{ "path": "./tsconfig.node.json" }],
-  "types": [ "node", "@testing-library/jest-dom"]
 }

@@ -5,14 +5,14 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
+    "noEmit": false, //型チェックで使用
     "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
     "moduleResolution": "node",
-    "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": false,  //import時、末尾の拡張子がないと、コンパイルNGにする (trueにする)
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
 
     /* Linting */
     "strict": true,

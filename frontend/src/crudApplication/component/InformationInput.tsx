@@ -1,15 +1,13 @@
-import {useEffect, useState} from "react";
-import {postMyModel} from "../repository/NetworkMyModelRepository.ts";
-import {RequestMyModel} from "../model/MyModel.ts";
-import {getAllContents, postContents} from "../repository/NetworkContentsRepository.ts";
-import {RequestContents, ResponseContents} from "../model/Contents.ts";
+import {ChangeEvent, useEffect, useState} from "react";
+import {getAllContents, postContents} from "../repository/NetworkContentsRepository";
+import {RequestContents, ResponseContents} from "../model/Contents";
 
 export function InformationInput() {
   const [text, setText] = useState('')
   const [requestContents, setRequestContents] = useState<RequestContents>({content: ''})
   const [contents, setContents] = useState<ResponseContents[]>([])
 
-  const handleTextChange = (e) => {
+  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
   }
 
@@ -23,11 +21,11 @@ export function InformationInput() {
     });
   };
 
-  useEffect(() => {
-    getAllContents().then((data) => {
-      setContents(data)
-    })
-  }, []);
+  // useEffect(() => {
+  //   getAllContents().then((data) => {
+  //     setContents(data)
+  //   })
+  // }, []);
 
   return (
     <>

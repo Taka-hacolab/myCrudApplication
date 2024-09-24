@@ -1,5 +1,5 @@
 import './App.scss'
-import {InformationInput} from "./crudApplication/component/InformationInput.tsx";
+import {InformationInput} from "./crudApplication/component/InformationInput";
 
 function App() {
   return (
