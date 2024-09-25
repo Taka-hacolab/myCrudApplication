@@ -10,7 +10,8 @@ describe('NetworkContentsRepository', async () => {
 
   it('postContentsを実行すると、正しい引数で/api/contentsにpostする', () => {
     const stubContents: RequestContents = {
-      content: '保存コンテンツ'
+      content: '保存コンテンツ',
+      status: "finished"
     }
 
     postContents(stubContents)
@@ -29,15 +30,18 @@ describe('NetworkContentsRepository', async () => {
   it('getAllContentsを実行すると、取得したデータを返す', async () => {
     const contents1: ResponseContents = {
       id: 1,
-      content: 'コンテンツ1'
+      content: 'コンテンツ1',
+      status: "notFinished"
     }
     const contents2: ResponseContents = {
       id: 2,
-      content: 'コンテンツ2'
+      content: 'コンテンツ2',
+      status: "notFinished"
     }
     const contents3: ResponseContents = {
       id: 3,
-      content: 'コンテンツ3'
+      content: 'コンテンツ3',
+      status: "finished"
     }
     vi.mocked(axios.get).mockResolvedValue({
       data: [contents1, contents2, contents3]
@@ -53,7 +57,8 @@ describe('NetworkContentsRepository', async () => {
 
     const updateContents: RequestContents = {
       id: 99,
-      content: 'コンテンツ1'
+      content: 'コンテンツ1',
+      status: 'finished'
     }
 
     putContents(updateContents)

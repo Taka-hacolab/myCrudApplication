@@ -27,8 +27,6 @@ describe('<InformationInput />', () => {
 
     expect(postContents).toHaveBeenCalledWith({content: 'hoge'})
   })
-
-
 })
 
 const renderInformationInput = () => {
