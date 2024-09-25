@@ -6,7 +6,7 @@ export const postContents = async (newContents: RequestContents) => {
   await axios.post('/api/contents', newContents)
 }
 
-export const getAllContents = async (): Promise<ResponseContents[]> => {
+export const getAllContents = async (): Promise< ResponseContents[] > => {
   const { data } = (await axios.get('/api/contents')) as AxiosResponse
   return data
 }
