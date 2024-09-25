@@ -5,6 +5,7 @@ import myApplication.model.RequestContents
 import myApplication.repository.JPAContentsRepository
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -16,41 +17,41 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ContentsServiceTest {
     @Autowired
-    private lateinit var mockedContentsRepository: JPAContentsRepository
+    private lateinit var contentsRepository: JPAContentsRepository
     private lateinit var contentsService: ContentsService
+
+    @BeforeEach
+    fun setup() {
+        contentsRepository.deleteAll()
+        contentsService = ContentsServiceImpl(contentsRepository)
+    }
 
     @Test
     fun `createを実行すると、contentsを作成して保存する` () {
-        mockedContentsRepository.deleteAll()
-        contentsService = ContentsServiceImpl(mockedContentsRepository)
-
         val stubContents = RequestContents(
             content = "テストコンテンツ"
         )
 
         contentsService.create(stubContents)
 
-        val getAllContents = mockedContentsRepository.findAll()
+        val getAllContents = contentsRepository.findAll()
 
         assertThat(getAllContents[0].content,equalTo("テストコンテンツ"))
     }
 
     @Test
     fun `getAllを実行すると、DBに保存されているContentsの情報を返す` () {
-        mockedContentsRepository.deleteAll()
-        contentsService = ContentsServiceImpl(mockedContentsRepository)
-
-        val saveResponse1 = mockedContentsRepository.save(
+        val saveResponse1 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ1"
             )
         )
-        val saveResponse2 = mockedContentsRepository.save(
+        val saveResponse2 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ2"
             )
         )
-        val saveResponse3 = mockedContentsRepository.save(
+        val saveResponse3 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ3"
             )
@@ -64,5 +65,27 @@ class ContentsServiceTest {
         assertThat(response[1].content, equalTo(saveResponse2.content))
         assertThat(response[2].id, equalTo(saveResponse3.id))
         assertThat(response[2].content, equalTo(saveResponse3.content))
+    }
+
+    @Test
+    fun`updateを実行すると、DBに保存しているcontentを書き換えて保存する` () {
+        val saveContents = contentsRepository.save(
+            Contents(
+                content = "hoge"
+            )
+        )
+
+        val beforeResponse = contentsRepository.findById(saveContents.id).get()
+        contentsService.update(
+            RequestContents(
+                beforeResponse.id,
+                content = "fuga"
+            )
+        )
+
+        val afterResponse = contentsRepository.findById(saveContents.id).get()
+
+        assertThat(afterResponse.id, equalTo(saveContents.id))
+        assertThat(afterResponse.content, equalTo("fuga"))
     }
 }

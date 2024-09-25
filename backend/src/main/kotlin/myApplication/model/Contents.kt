@@ -16,6 +16,7 @@ data class Contents (
 )
 
 data class RequestContents (
+    val id: Int? = null,
     val content: String
 )
 

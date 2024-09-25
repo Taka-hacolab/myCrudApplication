@@ -1,20 +1,24 @@
 package myApplication.controller
 
+import io.mockk.every
+import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.verify
 import myApplication.model.RequestContents
 import myApplication.model.ResponseContents
 import myApplication.service.ContentsService
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.doNothing
 import org.mockito.Mockito.doReturn
-import org.mockito.Mockito.verify
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -22,16 +26,26 @@ class ContentsControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @MockBean
+    @InjectMockKs
+    private lateinit var mockedContentsController: ContentsController
+
+    @MockK
     private lateinit var mockedContentsService: ContentsService
+
+    @BeforeEach
+    fun setup() {
+        mockedContentsService = mockk()
+        mockedContentsController = ContentsController(mockedContentsService)
+        mockMvc = MockMvcBuilders.standaloneSetup(mockedContentsController).build()
+    }
 
     @Test
     fun `POSTリクエストを送ると、StatusOKが返り、正しい引数でserviceのcreateが呼ばれる` () {
-
         val stubContents = RequestContents(
             content = "コンテンツ"
         )
-        doNothing().`when`(mockedContentsService).create(stubContents)
+
+        every { mockedContentsService.create(any()) } returns Unit
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/contents").content(
@@ -45,11 +59,11 @@ class ContentsControllerTest {
         )
         .andExpect(status().isOk)
 
-        verify(mockedContentsService).create(stubContents)
+        verify { mockedContentsService.create(stubContents) }
     }
 
     @Test
-    fun `Getリクエストを送ると、statusOKが返り、serviceのgetAllで呼び出した値を返す` () {
+    fun `GETリクエストを送ると、statusOKが返り、serviceのgetAllで呼び出した値を返す` () {
         val stubContents = listOf(
             ResponseContents(
                 id = 1,
@@ -65,7 +79,7 @@ class ContentsControllerTest {
             ),
         )
 
-        doReturn(stubContents).`when`(mockedContentsService).getAll()
+        every { mockedContentsService.getAll() } returns stubContents
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/contents")
@@ -78,6 +92,28 @@ class ContentsControllerTest {
         .andExpect(jsonPath("$[2].id").value(3))
         .andExpect(jsonPath("$[2].content").value("コンテンツ3"))
 
-        verify(mockedContentsService).getAll()
+        verify { mockedContentsService.getAll() }
+    }
+
+    @Test
+    fun `PUTリクエストを送ると、statusOKが返り、serviceのupdateを正しい引数で呼ぶ` () {
+        every { mockedContentsService.update(any()) } returns Unit
+
+        val stubContents = RequestContents(
+            id = 99,
+            content = "hogeContents"
+        )
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.put("/api/contents").content("""
+                {
+                    "id":"99",
+                    "content":"hogeContents"
+                }
+            """.trimIndent())
+                .contentType("application/json")
+        )
+            .andExpect(status().isOk)
+        verify { mockedContentsService.update(stubContents) }
     }
 }

@@ -7,8 +7,10 @@ import myApplication.repository.JPAContentsRepository
 import org.springframework.stereotype.Service
 
 interface ContentsService {
-    fun create(newContents: RequestContents)
+    fun create(newContents: RequestContents): Unit
     fun getAll(): List<ResponseContents>
+
+    fun update(updateContents: RequestContents): Unit
 }
 
 @Service
@@ -27,5 +29,15 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
                 it.content
             )
         }
+    }
+
+    override fun update(updateContents: RequestContents) {
+        val result = contentsRepository.findById(updateContents.id!!).get()
+        contentsRepository.save(
+            Contents(
+                result.id,
+                updateContents.content
+            )
+        )
     }
 }

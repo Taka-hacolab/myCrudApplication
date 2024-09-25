@@ -5,6 +5,7 @@ import myApplication.model.ResponseContents
 import myApplication.service.ContentsService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -23,5 +24,13 @@ class ContentsController(val contentsService: ContentsService) {
     @GetMapping("/contents")
     fun getAll(): List<ResponseContents>{
         return contentsService.getAll()
+    }
+
+    @PutMapping("/contents")
+    fun update(
+        @RequestBody
+        reqBody: RequestContents
+    ){
+        contentsService.update(reqBody)
     }
 }
