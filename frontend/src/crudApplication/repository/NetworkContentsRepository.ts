@@ -10,3 +10,7 @@ export const getAllContents = async (): Promise< ResponseContents[] > => {
   const { data } = (await axios.get('/api/contents')) as AxiosResponse
   return data
 }
+
+export const putContents = async (updateContents: RequestContents) => {
+  await axios.put('/api/contents', updateContents)
+}

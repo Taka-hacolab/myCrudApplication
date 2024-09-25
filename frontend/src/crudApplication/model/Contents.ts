@@ -1,4 +1,5 @@
 export type RequestContents = {
+  id?: number | null,
   content: string
 }
 

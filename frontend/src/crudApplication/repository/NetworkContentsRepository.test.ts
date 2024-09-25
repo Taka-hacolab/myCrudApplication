@@ -1,6 +1,6 @@
 import {vi} from "vitest";
 import axios, {AxiosResponse} from "axios";
-import {getAllContents, postContents} from "./NetworkContentsRepository";
+import {getAllContents, postContents, putContents} from "./NetworkContentsRepository";
 import {RequestContents, ResponseContents} from "../model/Contents";
 
 
@@ -46,5 +46,18 @@ describe('NetworkContentsRepository', async () => {
     const result = await getAllContents()
 
     expect(result).toEqual([contents1, contents2, contents3])
+  })
+
+  it('putContentsを実行すると、正しい引数でputする', () => {
+    vi.mocked(axios.put).mockResolvedValue({})
+
+    const updateContents: RequestContents = {
+      id: 99,
+      content: 'コンテンツ1'
+    }
+
+    putContents(updateContents)
+
+    expect(axios.put).toHaveBeenCalledWith('/api/contents', updateContents)
   })
 })
