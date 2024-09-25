@@ -17,7 +17,7 @@ export function InformationInput() {
   }
 
   const storeContents = async () => {
-    const createContents: RequestContents = { content: text };
+    const createContents: RequestContents = { content: text, status:'notFinished' };
     setRequestContents(createContents);
 
     await postContents(createContents);
