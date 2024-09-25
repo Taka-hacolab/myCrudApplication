@@ -29,7 +29,8 @@ class ContentsServiceTest {
     @Test
     fun `createを実行すると、contentsを作成して保存する` () {
         val stubContents = RequestContents(
-            content = "テストコンテンツ"
+            content = "テストコンテンツ",
+            status = "finished"
         )
 
         contentsService.create(stubContents)
@@ -43,17 +44,20 @@ class ContentsServiceTest {
     fun `getAllを実行すると、DBに保存されているContentsの情報を返す` () {
         val saveResponse1 = contentsRepository.save(
             Contents(
-                content = "保存コンテンツ1"
+                content = "保存コンテンツ1",
+                status = "notFinished"
             )
         )
         val saveResponse2 = contentsRepository.save(
             Contents(
-                content = "保存コンテンツ2"
+                content = "保存コンテンツ2",
+                status = "notFinished"
             )
         )
         val saveResponse3 = contentsRepository.save(
             Contents(
-                content = "保存コンテンツ3"
+                content = "保存コンテンツ3",
+                status = "finished"
             )
         )
 
@@ -71,7 +75,8 @@ class ContentsServiceTest {
     fun`updateを実行すると、DBに保存しているcontentを書き換えて保存する` () {
         val saveContents = contentsRepository.save(
             Contents(
-                content = "hoge"
+                content = "hoge",
+                status = "finished"
             )
         )
 
@@ -79,7 +84,8 @@ class ContentsServiceTest {
         contentsService.update(
             RequestContents(
                 beforeResponse.id,
-                content = "fuga"
+                content = "fuga",
+                status = "notFinished"
             )
         )
 

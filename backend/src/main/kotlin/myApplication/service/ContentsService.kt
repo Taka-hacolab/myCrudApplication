@@ -17,7 +17,8 @@ interface ContentsService {
 class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): ContentsService {
     override fun create(newContents: RequestContents) {
         contentsRepository.save(Contents(
-            content = newContents.content
+            content = newContents.content,
+            status = "finished"
         ))
     }
 
@@ -26,7 +27,8 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
         return result.map{
             ResponseContents(
                 it.id,
-                it.content
+                it.content,
+                it.status
             )
         }
     }
@@ -36,7 +38,8 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
         contentsRepository.save(
             Contents(
                 result.id,
-                updateContents.content
+                updateContents.content,
+                updateContents.status
             )
         )
     }

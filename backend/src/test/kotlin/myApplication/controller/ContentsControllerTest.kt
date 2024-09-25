@@ -42,7 +42,8 @@ class ContentsControllerTest {
     @Test
     fun `POSTリクエストを送ると、StatusOKが返り、正しい引数でserviceのcreateが呼ばれる` () {
         val stubContents = RequestContents(
-            content = "コンテンツ"
+            content = "コンテンツ",
+            status = "notFinished"
         )
 
         every { mockedContentsService.create(any()) } returns Unit
@@ -51,7 +52,8 @@ class ContentsControllerTest {
             MockMvcRequestBuilders.post("/api/contents").content(
                 """
                     {
-                        "content":"コンテンツ"
+                        "content":"コンテンツ",
+                        "status":"notFinished"
                     }
                 """.trimIndent()
             )
@@ -67,15 +69,18 @@ class ContentsControllerTest {
         val stubContents = listOf(
             ResponseContents(
                 id = 1,
-                content = "コンテンツ1"
+                content = "コンテンツ1",
+                status = "notFinished"
             ),
             ResponseContents(
                 id = 2,
-                content = "コンテンツ2"
+                content = "コンテンツ2",
+                status = "finished"
             ),
             ResponseContents(
                 id = 3,
-                content = "コンテンツ3"
+                content = "コンテンツ3",
+                status = "finished"
             ),
         )
 
@@ -87,10 +92,14 @@ class ContentsControllerTest {
         .andExpect(status().isOk)
         .andExpect(jsonPath("$[0].id").value(1))
         .andExpect(jsonPath("$[0].content").value("コンテンツ1"))
+        .andExpect(jsonPath("$[0].status").value("notFinished"))
         .andExpect(jsonPath("$[1].id").value(2))
         .andExpect(jsonPath("$[1].content").value("コンテンツ2"))
+        .andExpect(jsonPath("$[1].status").value("finished"))
         .andExpect(jsonPath("$[2].id").value(3))
         .andExpect(jsonPath("$[2].content").value("コンテンツ3"))
+        .andExpect(jsonPath("$[2].status").value("finished"))
+
 
         verify { mockedContentsService.getAll() }
     }
@@ -101,14 +110,16 @@ class ContentsControllerTest {
 
         val stubContents = RequestContents(
             id = 99,
-            content = "hogeContents"
+            content = "hogeContents",
+            status = "notFinished"
         )
 
         mockMvc.perform(
             MockMvcRequestBuilders.put("/api/contents").content("""
                 {
                     "id":"99",
-                    "content":"hogeContents"
+                    "content":"hogeContents",
+                    "status":"notFinished"
                 }
             """.trimIndent())
                 .contentType("application/json")
