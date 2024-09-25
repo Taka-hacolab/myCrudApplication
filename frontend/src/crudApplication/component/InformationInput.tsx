@@ -1,5 +1,5 @@
 import {ChangeEvent, useEffect, useState} from "react";
-import {getAllContents, postContents} from "../repository/NetworkContentsRepository";
+import {getAllContents, postContents, putContents} from "../repository/NetworkContentsRepository";
 import {RequestContents, ResponseContents} from "../model/Contents";
 
 export function InformationInput() {
@@ -11,14 +11,18 @@ export function InformationInput() {
     setText(e.target.value)
   }
 
+  const setAndGetContents = async () => {
+    const allContents = await getAllContents()
+    setContents(allContents)
+  }
+
   const storeContents = async () => {
     const createContents: RequestContents = { content: text };
     setRequestContents(createContents);
 
     await postContents(createContents);
 
-    const allContents = await getAllContents();
-    setContents(allContents);
+    await setAndGetContents()
   };
 
   useEffect(() => {
@@ -33,8 +37,8 @@ export function InformationInput() {
       <input type="textbox" value={text} onChange={handleTextChange} placeholder='コンテンツを入力'/>
       <button onClick={storeContents}>保存</button>
       <div>
-        {contents.map((obj, index) => (
-          <div key={index}>{obj.content}</div>
+        {contents.map((valueObj, index) => (
+            <p key={index}>{valueObj.content}</p>
         ))}
       </div>
     </>
