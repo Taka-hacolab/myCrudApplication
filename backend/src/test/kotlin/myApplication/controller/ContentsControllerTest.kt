@@ -27,16 +27,16 @@ class ContentsControllerTest {
     private lateinit var mockMvc: MockMvc
 
     @InjectMockKs
-    private lateinit var mockedContentsController: ContentsController
+    private lateinit var contentsController: ContentsController
 
     @MockK
-    private lateinit var mockedContentsService: ContentsService
+    private lateinit var contentsService: ContentsService
 
     @BeforeEach
     fun setup() {
-        mockedContentsService = mockk()
-        mockedContentsController = ContentsController(mockedContentsService)
-        mockMvc = MockMvcBuilders.standaloneSetup(mockedContentsController).build()
+        contentsService = mockk()
+        contentsController = ContentsController(contentsService)
+        mockMvc = MockMvcBuilders.standaloneSetup(contentsController).build()
     }
 
     @Test
@@ -46,7 +46,7 @@ class ContentsControllerTest {
             status = "notFinished"
         )
 
-        every { mockedContentsService.create(any()) } returns Unit
+        every { contentsService.create(any()) } returns Unit
 
         mockMvc.perform(
             MockMvcRequestBuilders.post("/api/contents").content(
@@ -61,7 +61,7 @@ class ContentsControllerTest {
         )
         .andExpect(status().isOk)
 
-        verify { mockedContentsService.create(stubContents) }
+        verify { contentsService.create(stubContents) }
     }
 
     @Test
@@ -84,7 +84,7 @@ class ContentsControllerTest {
             ),
         )
 
-        every { mockedContentsService.getAll() } returns stubContents
+        every { contentsService.getAll() } returns stubContents
 
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/contents")
@@ -101,12 +101,12 @@ class ContentsControllerTest {
         .andExpect(jsonPath("$[2].status").value("finished"))
 
 
-        verify { mockedContentsService.getAll() }
+        verify { contentsService.getAll() }
     }
 
     @Test
     fun `PUTリクエストを送ると、statusOKが返り、serviceのupdateを正しい引数で呼ぶ` () {
-        every { mockedContentsService.update(any()) } returns Unit
+        every { contentsService.update(any()) } returns Unit
 
         val stubContents = RequestContents(
             id = 99,
@@ -125,6 +125,6 @@ class ContentsControllerTest {
                 .contentType("application/json")
         )
             .andExpect(status().isOk)
-        verify { mockedContentsService.update(stubContents) }
+        verify { contentsService.update(stubContents) }
     }
 }

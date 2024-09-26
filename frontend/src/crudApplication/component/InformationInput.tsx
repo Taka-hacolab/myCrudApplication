@@ -25,6 +25,21 @@ export function InformationInput() {
     await setAndGetContents()
   };
 
+  const handleCheckboxChange = (id: number) => {
+    setContents((prevContents) =>
+      prevContents.map((content) =>
+        content.id === id
+          ? {
+            ...content,
+            status: content.status === 'finished' ? 'notFinished' : 'finished',
+          }
+          : content
+      )
+    );
+  };
+
+  //TODO viewからputContentsを実行する仕組みを考える
+
   useEffect(() => {
     getAllContents().then((data) => {
       setContents(data)
@@ -38,9 +53,19 @@ export function InformationInput() {
       <button onClick={storeContents}>保存</button>
       <div>
         {contents.map((valueObj, index) => (
-            <p key={index}>{valueObj.content}</p>
-        ))}
-      </div>
-    </>
-  )
+          <div key={valueObj.id}>
+            <label>
+              <input
+                type="checkbox"
+                checked={valueObj.status === 'finished'}
+                onChange={() => handleCheckboxChange(valueObj.id)}
+              />
+              {valueObj.content}
+            </label>
+          </div>
+          // <p key={index}>{valueObj.content}</p>
+      ))}
+    </div>
+</>
+)
 }
