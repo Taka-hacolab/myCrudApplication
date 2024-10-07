@@ -1,4 +1,4 @@
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {getAllContents, postContents, putContents} from "../repository/NetworkContentsRepository";
 import {RequestContents, ResponseContents} from "../model/Contents";
 
@@ -11,10 +11,10 @@ export function InformationInput() {
     setText(e.target.value)
   }
 
-  const setAndGetContents = async () => {
+  const setAndGetContents = useCallback( async () => {
     const allContents = await getAllContents()
     setContents(allContents)
-  }
+  }, [])
 
   const storeContents = async () => {
     const createContents: RequestContents = { content: text, status:'notFinished' };
@@ -38,12 +38,13 @@ export function InformationInput() {
     );
   };
 
-  //TODO viewからputContentsを実行する仕組みを考える
-
   useEffect(() => {
-    getAllContents().then((data) => {
-      setContents(data)
-    })
+    const getAllContents = async () => {
+      await setAndGetContents();
+    };
+    getAllContents().catch((error) => {
+      console.error('Error発生', error);
+    });
   }, []);
 
   return (
@@ -52,7 +53,7 @@ export function InformationInput() {
       <input type="textbox" value={text} onChange={handleTextChange} placeholder='コンテンツを入力'/>
       <button onClick={storeContents}>保存</button>
       <div>
-        {contents.map((valueObj, index) => (
+        {contents && contents.map(valueObj => (
           <div key={valueObj.id}>
             <label>
               <input
@@ -63,7 +64,6 @@ export function InformationInput() {
               {valueObj.content}
             </label>
           </div>
-          // <p key={index}>{valueObj.content}</p>
       ))}
     </div>
 </>
