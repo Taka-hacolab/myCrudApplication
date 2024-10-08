@@ -30,7 +30,7 @@ class ContentsServiceTest {
     fun `createを実行すると、contentsを作成して保存する` () {
         val stubContents = RequestContents(
             content = "テストコンテンツ",
-            status = "finished"
+            isDone = true
         )
 
         contentsService.create(stubContents)
@@ -45,19 +45,19 @@ class ContentsServiceTest {
         val saveResponse1 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ1",
-                status = "notFinished"
+                isDone = true
             )
         )
         val saveResponse2 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ2",
-                status = "notFinished"
+                isDone = true
             )
         )
         val saveResponse3 = contentsRepository.save(
             Contents(
                 content = "保存コンテンツ3",
-                status = "finished"
+                isDone = false
             )
         )
 
@@ -76,7 +76,7 @@ class ContentsServiceTest {
         val saveContents = contentsRepository.save(
             Contents(
                 content = "hoge",
-                status = "finished"
+                isDone = true
             )
         )
 
@@ -85,7 +85,7 @@ class ContentsServiceTest {
             RequestContents(
                 beforeResponse.id,
                 content = "fuga",
-                status = "notFinished"
+                isDone = false
             )
         )
 

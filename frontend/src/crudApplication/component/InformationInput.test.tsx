@@ -10,6 +10,7 @@ describe('<InformationInput />', () => {
     await act (async () => {
       renderInformationInput()
     })
+    //TODO 原因調査
 
     expect(screen.getByText('ToDoApp')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('コンテンツを入力')).toBeInTheDocument()

@@ -31,7 +31,7 @@ export function InformationInput() {
         content.id === id
           ? {
             ...content,
-            status: content.status === 'finished' ? 'notFinished' : 'finished',
+            isDone: content.isDone,
           }
           : content
       )
@@ -58,7 +58,7 @@ export function InformationInput() {
             <label>
               <input
                 type="checkbox"
-                checked={valueObj.status === 'finished'}
+                checked={valueObj.isDone}
                 onChange={() => handleCheckboxChange(valueObj.id)}
               />
               {valueObj.content}

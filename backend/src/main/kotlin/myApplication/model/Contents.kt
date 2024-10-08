@@ -1,5 +1,6 @@
 package myApplication.model
 
+import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
@@ -13,17 +14,18 @@ data class Contents (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
     val content: String,
-    val status: String
+    @Column(name = "is_done")
+    val isDone: Boolean = false
 )
 
 data class RequestContents (
     val id: Int? = null,
     val content: String,
-    val status: String
+    val isDone: Boolean
 )
 
 data class ResponseContents (
     val id: Int,
     val content: String,
-    val status: String
+    val isDone: Boolean
 )

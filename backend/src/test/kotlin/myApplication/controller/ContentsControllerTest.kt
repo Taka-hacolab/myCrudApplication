@@ -43,7 +43,7 @@ class ContentsControllerTest {
     fun `POSTリクエストを送ると、StatusOKが返り、正しい引数でserviceのcreateが呼ばれる` () {
         val stubContents = RequestContents(
             content = "コンテンツ",
-            status = "notFinished"
+            isDone = true
         )
 
         every { contentsService.create(any()) } returns Unit
@@ -53,7 +53,7 @@ class ContentsControllerTest {
                 """
                     {
                         "content":"コンテンツ",
-                        "status":"notFinished"
+                        "isDone":"true"
                     }
                 """.trimIndent()
             )
@@ -70,17 +70,17 @@ class ContentsControllerTest {
             ResponseContents(
                 id = 1,
                 content = "コンテンツ1",
-                status = "notFinished"
+                isDone = true
             ),
             ResponseContents(
                 id = 2,
                 content = "コンテンツ2",
-                status = "finished"
+                isDone = true
             ),
             ResponseContents(
                 id = 3,
                 content = "コンテンツ3",
-                status = "finished"
+                isDone = false
             ),
         )
 
@@ -92,13 +92,13 @@ class ContentsControllerTest {
         .andExpect(status().isOk)
         .andExpect(jsonPath("$[0].id").value(1))
         .andExpect(jsonPath("$[0].content").value("コンテンツ1"))
-        .andExpect(jsonPath("$[0].status").value("notFinished"))
+        .andExpect(jsonPath("$[0].isDone").value(true))
         .andExpect(jsonPath("$[1].id").value(2))
         .andExpect(jsonPath("$[1].content").value("コンテンツ2"))
-        .andExpect(jsonPath("$[1].status").value("finished"))
+        .andExpect(jsonPath("$[1].isDone").value(true))
         .andExpect(jsonPath("$[2].id").value(3))
         .andExpect(jsonPath("$[2].content").value("コンテンツ3"))
-        .andExpect(jsonPath("$[2].status").value("finished"))
+        .andExpect(jsonPath("$[2].isDone").value(false))
 
 
         verify { contentsService.getAll() }
@@ -111,7 +111,7 @@ class ContentsControllerTest {
         val stubContents = RequestContents(
             id = 99,
             content = "hogeContents",
-            status = "notFinished"
+            isDone = true
         )
 
         mockMvc.perform(
@@ -119,7 +119,7 @@ class ContentsControllerTest {
                 {
                     "id":"99",
                     "content":"hogeContents",
-                    "status":"notFinished"
+                    "isDone":"true"
                 }
             """.trimIndent())
                 .contentType("application/json")

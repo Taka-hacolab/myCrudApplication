@@ -18,7 +18,6 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
     override fun create(newContents: RequestContents) {
         contentsRepository.save(Contents(
             content = newContents.content,
-            status = "finished"
         ))
     }
 
@@ -28,7 +27,7 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
             ResponseContents(
                 it.id,
                 it.content,
-                it.status
+                it.isDone
             )
         }
     }
@@ -39,7 +38,7 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
             Contents(
                 result.id,
                 updateContents.content,
-                updateContents.status
+                updateContents.isDone
             )
         )
     }
