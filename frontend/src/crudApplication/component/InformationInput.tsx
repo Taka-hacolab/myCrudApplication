@@ -17,7 +17,7 @@ export function InformationInput() {
   }, [])
 
   const storeContents = async () => {
-    const createContents: RequestContents = { content: text, status:'notFinished' };
+    const createContents: RequestContents = { content: text, isDone: false };
     setRequestContents(createContents);
 
     await postContents(createContents);
@@ -28,12 +28,7 @@ export function InformationInput() {
   const handleCheckboxChange = (id: number) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
-        content.id === id
-          ? {
-            ...content,
-            isDone: content.isDone,
-          }
-          : content
+        content.id === id ? { ...content, isDone: !content.isDone } : content
       )
     );
   };
@@ -47,6 +42,8 @@ export function InformationInput() {
     });
   }, []);
 
+  // TODO （１）テキスト内容を編集できるようにすること
+  // TODO （２）チェックが入るたびにPUTの処理が働くように修正
   return (
     <>
       <p>ToDoApp</p>
@@ -63,6 +60,7 @@ export function InformationInput() {
               />
               {valueObj.content}
             </label>
+            <button onClick={() => putContents(valueObj)}>更新</button>
           </div>
       ))}
     </div>
