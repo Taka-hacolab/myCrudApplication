@@ -5,8 +5,10 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.verify
+import myApplication.model.Contents
 import myApplication.model.RequestContents
 import myApplication.model.ResponseContents
+import myApplication.repository.JPAContentsRepository
 import myApplication.service.ContentsService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -31,6 +33,9 @@ class ContentsControllerTest {
 
     @MockK
     private lateinit var contentsService: ContentsService
+
+    @Autowired
+    private lateinit var repository: JPAContentsRepository
 
     @BeforeEach
     fun setup() {
@@ -126,5 +131,24 @@ class ContentsControllerTest {
         )
             .andExpect(status().isOk)
         verify { contentsService.update(stubContents) }
+    }
+
+    @Test
+    fun `DELETEリクエストを送ると、statusOKが返り、serviceのdeleteを正しい引数で呼ぶ` () {
+        val stubContents = Contents(
+            content = "hoge",
+            isDone = true
+        )
+
+        val createdContent = repository.save(stubContents)
+        val deleteNumber = createdContent.id
+
+        every { contentsService.delete( any()) } returns Unit
+
+        mockMvc.perform(
+            MockMvcRequestBuilders.delete("/api/contents/${deleteNumber}")
+        ).andExpect(status().isOk)
+
+        verify { contentsService.delete( deleteNumber )}
     }
 }

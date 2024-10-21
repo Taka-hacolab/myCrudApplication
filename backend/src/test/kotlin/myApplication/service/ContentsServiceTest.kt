@@ -94,4 +94,32 @@ class ContentsServiceTest {
         assertThat(afterResponse.id, equalTo(saveContents.id))
         assertThat(afterResponse.content, equalTo("fuga"))
     }
+
+    @Test
+    fun `deleteを実行すると、DBに保存しているcontentを削除する` () {
+        val saveContents = contentsRepository.saveAll(
+            listOf(
+                Contents(
+                content = "fuga",
+                isDone = true
+            ),
+                Contents(
+                    content = "piyo",
+                    isDone = false
+                )
+            )
+        )
+
+        val beforeDeleteArray = contentsRepository.findAll()
+        assert(beforeDeleteArray.size == 2)
+
+        val deleteContent = contentsRepository.findById(saveContents[0].id).get()
+        contentsService.delete( deleteContent.id )
+
+        val afterDeleteArray = contentsRepository.findAll()
+        assert(afterDeleteArray.size == 1)
+
+        val existContent = afterDeleteArray[0]
+        assert(existContent.content == "piyo" )
+    }
 }

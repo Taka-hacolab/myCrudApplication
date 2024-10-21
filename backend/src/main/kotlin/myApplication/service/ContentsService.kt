@@ -11,6 +11,8 @@ interface ContentsService {
     fun getAll(): List<ResponseContents>
 
     fun update(updateContents: RequestContents): Unit
+
+    fun delete(id: Int): Unit
 }
 
 @Service
@@ -41,5 +43,10 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
                 updateContents.isDone
             )
         )
+    }
+
+    override fun delete(id: Int) {
+        val deleteContent = contentsRepository.findById(id)
+        contentsRepository.delete(deleteContent.get())
     }
 }
