@@ -1,6 +1,6 @@
 import {vi} from "vitest";
 import axios, {AxiosResponse} from "axios";
-import {getAllContents, postContents, putContents} from "./NetworkContentsRepository";
+import {deleteContents, getAllContents, postContents, putContents} from "./NetworkContentsRepository";
 import {RequestContents, ResponseContents} from "../model/Contents";
 
 
@@ -64,5 +64,19 @@ describe('NetworkContentsRepository', async () => {
     putContents(updateContents)
 
     expect(axios.put).toHaveBeenCalledWith('/api/contents', updateContents)
+  })
+
+  it('deleteContentsを実行すると、正しい引数でdeleteする', () => {
+    vi.mocked(axios.delete).mockReturnValue({})
+
+    const stubContent: RequestContents = {
+      id: 99,
+      content: 'コンテンツ1',
+      status: 'finished'
+    }
+
+    deleteContents(stubContent.id)
+
+    expect(axios.delete).toHaveBeenCalledWith(`/api/contents/${stubContent.id}`)
   })
 })

@@ -14,3 +14,7 @@ export const getAllContents = async (): Promise< ResponseContents[] > => {
 export const putContents = async (updateContents: RequestContents) => {
   await axios.put('/api/contents', updateContents)
 }
+
+export const deleteContents = async (deleteNumber: Number) => {
+  await axios.delete(`/api/contents/${deleteNumber}`)
+}
