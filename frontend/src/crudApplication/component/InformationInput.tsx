@@ -1,23 +1,30 @@
 import {ChangeEvent, useCallback, useEffect, useState} from "react";
-import {getAllContents, postContents, putContents} from "../repository/NetworkContentsRepository";
+import {deleteContents, getAllContents, postContents, putContents} from "../repository/NetworkContentsRepository";
 import {RequestContents, ResponseContents} from "../model/Contents";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export function InformationInput() {
   const [text, setText] = useState('')
   const [requestContents, setRequestContents] = useState<RequestContents>({content: ''})
   const [contents, setContents] = useState<ResponseContents[]>([])
 
+  useEffect(() => {
+    getAllContents().then(res => setContents(res)).catch((error) => console.error(error))
+  }, [])
+
+
   const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
   }
 
-  const setAndGetContents = useCallback( async () => {
+  const setAndGetContents = useCallback(async () => {
     const allContents = await getAllContents()
     setContents(allContents)
   }, [])
 
   const storeContents = async () => {
-    const createContents: RequestContents = { content: text, isDone: false };
+    const createContents: RequestContents = {content: text, isDone: false};
     setRequestContents(createContents);
 
     await postContents(createContents);
@@ -28,7 +35,15 @@ export function InformationInput() {
   const handleCheckboxChange = (id: number) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
-        content.id === id ? { ...content, isDone: !content.isDone } : content
+        content.id === id ? {...content, isDone: !content.isDone} : content
+      )
+    );
+  };
+
+  const handleContentChange = (id: number, newContent: string) => {
+    setContents((prevContents) =>
+      prevContents.map((content) =>
+        content.id === id ? {...content, content: newContent} : content
       )
     );
   };
@@ -52,18 +67,20 @@ export function InformationInput() {
       <div>
         {contents && contents.map(valueObj => (
           <div key={valueObj.id}>
-            <label>
-              <input
-                type="checkbox"
-                checked={valueObj.isDone}
-                onChange={() => handleCheckboxChange(valueObj.id)}
-              />
-              {valueObj.content}
-            </label>
+            <input
+              type="checkbox"
+              checked={valueObj.isDone}
+              onChange={() => handleCheckboxChange(valueObj.id)}
+            />
+            <input type="text"
+                   value={valueObj.content}
+                   onChange={(e) => handleContentChange(valueObj.id, e.target.value)}
+            />
             <button onClick={() => putContents(valueObj)}>更新</button>
+            <button onClick={() => deleteContents(valueObj.id)}>削除</button>
           </div>
-      ))}
-    </div>
-</>
-)
+        ))}
+      </div>
+    </>
+  )
 }
