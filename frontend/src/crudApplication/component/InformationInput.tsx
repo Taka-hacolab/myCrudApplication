@@ -48,14 +48,15 @@ export function InformationInput() {
     );
   };
 
-  useEffect(() => {
-    const getAllContents = async () => {
-      await setAndGetContents();
-    };
-    getAllContents().catch((error) => {
-      console.error('Error発生', error);
-    });
-  }, []);
+  const handlePutContent = async ( updateContent: RequestContents) => {
+    await putContents(updateContent)
+    await setAndGetContents()
+  }
+
+  const handleDeleteContent = async ( deleteContentId: Number) => {
+    await deleteContents(deleteContentId)
+    await setAndGetContents()
+  }
 
   // TODO （１）テキスト内容を編集できるようにすること
   // TODO （２）チェックが入るたびにPUTの処理が働くように修正
@@ -76,8 +77,8 @@ export function InformationInput() {
                    value={valueObj.content}
                    onChange={(e) => handleContentChange(valueObj.id, e.target.value)}
             />
-            <button onClick={() => putContents(valueObj)}>更新</button>
-            <button onClick={() => deleteContents(valueObj.id)}>削除</button>
+            <button onClick={() => handlePutContent(valueObj)}>更新</button>
+            <button onClick={() => handleDeleteContent(valueObj.id)}>削除</button>
           </div>
         ))}
       </div>
