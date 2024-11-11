@@ -12,7 +12,6 @@ import myApplication.repository.JPAContentsRepository
 import myApplication.service.ContentsService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.doReturn
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -94,17 +93,16 @@ class ContentsControllerTest {
         mockMvc.perform(
             MockMvcRequestBuilders.get("/api/contents")
         )
-        .andExpect(status().isOk)
-        .andExpect(jsonPath("$[0].id").value(1))
-        .andExpect(jsonPath("$[0].content").value("コンテンツ1"))
-        .andExpect(jsonPath("$[0].isDone").value(true))
-        .andExpect(jsonPath("$[1].id").value(2))
-        .andExpect(jsonPath("$[1].content").value("コンテンツ2"))
-        .andExpect(jsonPath("$[1].isDone").value(true))
-        .andExpect(jsonPath("$[2].id").value(3))
-        .andExpect(jsonPath("$[2].content").value("コンテンツ3"))
-        .andExpect(jsonPath("$[2].isDone").value(false))
-
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("$[0].id").value(1))
+            .andExpect(jsonPath("$[0].content").value("コンテンツ1"))
+            .andExpect(jsonPath("$[0].isDone").value(true))
+            .andExpect(jsonPath("$[1].id").value(2))
+            .andExpect(jsonPath("$[1].content").value("コンテンツ2"))
+            .andExpect(jsonPath("$[1].isDone").value(true))
+            .andExpect(jsonPath("$[2].id").value(3))
+            .andExpect(jsonPath("$[2].content").value("コンテンツ3"))
+            .andExpect(jsonPath("$[2].isDone").value(false))
 
         verify { contentsService.getAll() }
     }

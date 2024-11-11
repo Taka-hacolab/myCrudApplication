@@ -18,18 +18,19 @@ interface ContentsService {
 @Service
 class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): ContentsService {
     override fun create(newContents: RequestContents) {
-        contentsRepository.save(Contents(
-            content = newContents.content,
+        contentsRepository.save(
+            Contents(
+                content = newContents.content,
         ))
     }
 
     override fun getAll(): List<ResponseContents> {
-        val result = contentsRepository.findAll()
+        val result = contentsRepository.findAllByOrderByCreatedAtAsc()
         return result.map{
             ResponseContents(
                 it.id,
                 it.content,
-                it.isDone
+                it.isDone,
             )
         }
     }
@@ -40,7 +41,8 @@ class ContentsServiceImpl(val contentsRepository: JPAContentsRepository): Conten
             Contents(
                 result.id,
                 updateContents.content,
-                updateContents.isDone
+                updateContents.isDone,
+                createdAt = result.createdAt
             )
         )
     }
