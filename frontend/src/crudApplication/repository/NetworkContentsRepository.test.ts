@@ -1,7 +1,7 @@
 import {vi} from "vitest";
 import axios, {AxiosResponse} from "axios";
-import {deleteContents, getAllContents, postContents, putContents} from "./NetworkContentsRepository";
-import {RequestContents, ResponseContents} from "../model/Contents";
+import {deleteContent, getAllContents, postContent, putContent} from "./NetworkContentsRepository";
+import {RequestContent, ResponseContent} from "../model/Contents";
 
 
 vi.mock('axios')
@@ -9,14 +9,14 @@ vi.mock('axios')
 describe('NetworkContentsRepository', async () => {
 
   it('postContentsを実行すると、正しい引数で/api/contentsにpostする', () => {
-    const stubContents: RequestContents = {
+    const stubContent: RequestContent = {
       content: '保存コンテンツ',
-      status: "finished"
+      isDone: false
     }
 
-    postContents(stubContents)
+    postContent(stubContent)
 
-    expect(axios.post).toHaveBeenCalledWith('/api/contents', stubContents)
+    expect(axios.post).toHaveBeenCalledWith('/api/contents', stubContent)
   })
 
   it('getAllContentsを実行すると、正しい引数でaxios.getを呼び出す', () => {
@@ -28,54 +28,54 @@ describe('NetworkContentsRepository', async () => {
   })
 
   it('getAllContentsを実行すると、取得したデータを返す', async () => {
-    const contents1: ResponseContents = {
+    const content1: ResponseContent = {
       id: 1,
       content: 'コンテンツ1',
-      status: "notFinished"
+      isDone: false
     }
-    const contents2: ResponseContents = {
+    const content2: ResponseContent = {
       id: 2,
       content: 'コンテンツ2',
-      status: "notFinished"
+      isDone: false
     }
-    const contents3: ResponseContents = {
+    const content3: ResponseContent = {
       id: 3,
       content: 'コンテンツ3',
-      status: "finished"
+      isDone: false
     }
     vi.mocked(axios.get).mockResolvedValue({
-      data: [contents1, contents2, contents3]
+      data: [content1, content2, content3]
     } as AxiosResponse)
 
     const result = await getAllContents()
 
-    expect(result).toEqual([contents1, contents2, contents3])
+    expect(result).toEqual([content1, content2, content3])
   })
 
   it('putContentsを実行すると、正しい引数でputする', () => {
     vi.mocked(axios.put).mockResolvedValue({})
 
-    const updateContents: RequestContents = {
+    const updateContent: RequestContent = {
       id: 99,
       content: 'コンテンツ1',
-      status: 'finished'
+      isDone: false
     }
 
-    putContents(updateContents)
+    putContent(updateContent)
 
-    expect(axios.put).toHaveBeenCalledWith('/api/contents', updateContents)
+    expect(axios.put).toHaveBeenCalledWith('/api/contents', updateContent)
   })
 
   it('deleteContentsを実行すると、正しい引数でdeleteする', () => {
     vi.mocked(axios.delete).mockReturnValue({})
 
-    const stubContent: RequestContents = {
+    const stubContent: RequestContent = {
       id: 99,
       content: 'コンテンツ1',
-      status: 'finished'
+      isDone: false
     }
 
-    deleteContents(stubContent.id)
+    deleteContent(stubContent.id!)
 
     expect(axios.delete).toHaveBeenCalledWith(`/api/contents/${stubContent.id}`)
   })

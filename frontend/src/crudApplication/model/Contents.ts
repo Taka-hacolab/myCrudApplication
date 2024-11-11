@@ -1,10 +1,10 @@
-export type RequestContents = {
+export type RequestContent = {
   id?: number | null,
   content: string
   isDone: boolean
 }
 
-export type ResponseContents = {
+export type ResponseContent = {
   id: number,
   content: string
   isDone: boolean

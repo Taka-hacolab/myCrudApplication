@@ -1,20 +1,20 @@
 import axios, { AxiosResponse } from "axios";
-import {RequestContents, ResponseContents} from "../model/Contents";
+import {RequestContent, ResponseContent} from "../model/Contents";
 
 
-export const postContents = async (newContents: RequestContents) => {
+export const postContent = async (newContents: RequestContent) => {
   await axios.post('/api/contents', newContents)
 }
 
-export const getAllContents = async (): Promise< ResponseContents[] > => {
+export const getAllContents = async (): Promise< ResponseContent[] > => {
   const { data } = (await axios.get('/api/contents')) as AxiosResponse
   return data
 }
 
-export const putContents = async (updateContents: RequestContents) => {
+export const putContent = async (updateContents: RequestContent) => {
   await axios.put('/api/contents', updateContents)
 }
 
-export const deleteContents = async (deleteNumber: Number) => {
+export const deleteContent = async (deleteNumber: Number) => {
   await axios.delete(`/api/contents/${deleteNumber}`)
 }
