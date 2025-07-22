@@ -20,10 +20,10 @@ export function InformationInput() {
     )
   }
 
-  const handleContentChange2 = ((id: number, newContent: string) => {
+  const handleContentChangeTest = ((id: number, newContent: string) => {
     console.log(id)
     console.log(newContent)
-  } ) as unknown as (id: number, newContent: string) => void
+  } )
 
   const handleContentChange = (id: number, newContent: string) => {
     setContents((prevContents) =>
@@ -31,12 +31,25 @@ export function InformationInput() {
         content.id === id ? {...content, content: newContent} : content
       )
     )
+    handleContentChangeTest(id, newContent)
   }
 
   const handlePostContent = async () => {
     const createContents: RequestContent = {content: text, isDone: false}
     await postContent(createContents)
     getAllContents().then(res => setContents(res)).catch((error) => console.error(error))
+    handlePostChangeTest(1, text)
+  }
+
+  const handlePostChangeTest = (id: number, newContent: string) => {
+    console.log(id)
+    console.log(newContent)
+    addTen(id)
+    console.log(addTen(id))
+  }
+    
+  const addTen: (num: number) => number = (num) => {
+    return num + 10
   }
 
   const handlePutContent = async (updateContent: RequestContent) => {
