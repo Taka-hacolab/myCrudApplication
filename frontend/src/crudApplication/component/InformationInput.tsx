@@ -20,12 +20,18 @@ export function InformationInput() {
     )
   }
 
+  const handleContentChangeTest = ((id: number, newContent: string) => {
+    console.log(id)
+    console.log(newContent)
+  } )
+
   const handleContentChange = (id: number, newContent: string) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
         content.id === id ? {...content, content: newContent} : content
       )
     )
+    handleContentChangeTest(id, newContent)
   }
 
   const handlePostContent = async () => {
@@ -33,7 +39,6 @@ export function InformationInput() {
     await postContent(createContents)
     getAllContents().then(res => setContents(res)).catch((error) => console.error(error))
   }
-
     
   const addTen: (num: number) => number = (num) => {
     return num + 100
