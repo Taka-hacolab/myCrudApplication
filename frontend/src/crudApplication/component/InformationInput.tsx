@@ -44,12 +44,12 @@ export function InformationInput() {
   const handlePostChangeTest = (id: number, newContent: string) => {
     console.log(id)
     console.log(newContent)
-    addTen(id)
-    console.log(addTen(id))
+    addEight(id)
+    console.log(addEight(id))
   }
     
-  const addTen: (num: number) => number = (num) => {
-    return num + 10
+  const addEight: (num: number) => number = (num) => {
+    return num + 8
   }
 
   const handlePutContent = async (updateContent: RequestContent) => {
