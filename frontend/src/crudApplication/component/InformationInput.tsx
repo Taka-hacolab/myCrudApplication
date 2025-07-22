@@ -20,6 +20,11 @@ export function InformationInput() {
     )
   }
 
+  const handleContentChange2 = ((id: number, newContent: string) => {
+    console.log(id)
+    console.log(newContent)
+  } ) as unknown as (id: number, newContent: string) => void
+
   const handleContentChange = (id: number, newContent: string) => {
     setContents((prevContents) =>
       prevContents.map((content) =>
