@@ -44,12 +44,18 @@ export function InformationInput() {
   const handlePostChangeTest = (id: number, newContent: string) => {
     console.log(id)
     console.log(newContent)
-    addEight(id)
-    console.log(addEight(id))
+    // 両方の関数を統合
+    const result1 = addEight(id);
+    const result2 = addTen(id);
+    console.log(`addEight result: ${result1}, addTen result: ${result2}`)
   }
     
   const addEight: (num: number) => number = (num) => {
     return num + 8
+  }
+    
+  const addTen: (num: number) => number = (num) => {
+    return num + 100
   }
 
   const handlePutContent = async (updateContent: RequestContent) => {
